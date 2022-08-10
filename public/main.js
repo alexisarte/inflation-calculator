@@ -1,37 +1,24 @@
 //Actualiza la cantidad de meses en los selectores
 function updateMonths() {
     // select salva el selector de meses que vamos a actualizar, hay dos de ellos
-    let select;
-    // selectedMonth salva el mes seleccionado antes de actualizar el selector
-    let selectedMonth;
-    let num;
-    //Salva el selector correspondiente segun this (quién llamo al evento)
-    if (this.id == 'year1') {
-        select = document.getElementById('month1');
-        selectedMonth = select.value;
-    }
-    if (this.id == 'year2') {
-        select = document.getElementById('month2');
-        selectedMonth = select.value;
-    }
-
-    if (this.value == 2022) num = 3;
-    else num = 12;
-    //Si num es distinto a la cant actual del selector a modificar, actualizar la cant de meses y salvar el valor anterior, sino no es necesario!
-    if (num != select.childElementCount) {
-        //Elimina todos los elems del selector de meses
+    let select, selectedMonth, numberOfMonths;
+    select = this.id == 'year1' ? document.getElementById('month1') : document.getElementById('month2');
+    selectedMonth = select.value;
+    numberOfMonths = this.value === 2022 ? 3 : 12;
+    //Si numberOfMonths es distinto a la cant actual del selector a modificar, actualizar la cant de meses y salvar el valor anterior, sino no es necesario!
+    if (numberOfMonths != select.childElementCount) {
         while (select.firstChild != null) {
             select.firstChild.remove();
         }
         //Crea 3 o 12 meses posibles en el selector segun corrresponda
-        for (let i = 1; i <= num; i++) {
+        for (let i = 1; i <= numberOfMonths; i++) {
             let option = document.createElement('option');
             option.textContent = i;
             option.value = i;
             select.appendChild(option);
         }
-        //Si al value seleccionado anteriormente sigue siendo valido en el rango actual que seria num, seleccionar ese value, sino pone 1 por def
-        if (selectedMonth <= num) {
+        //Si al value seleccionado anteriormente sigue siendo valido en el rango actual que seria numberOfMonths, seleccionar ese value, sino pone 1 por def
+        if (selectedMonth <= numberOfMonths) {
             select.value = selectedMonth;
         }
     }

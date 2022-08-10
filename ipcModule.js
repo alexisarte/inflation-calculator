@@ -1,6 +1,8 @@
 const fs = require('fs');
 const rawdata = fs.readFileSync('./bls.json');
 const bls = JSON.parse(rawdata);
+const YEAR_LAST = bls[bls.length - 1].year;
+const YEAR_FIRST = bls[0].year;
 
 function findIpc(month, year) {
     return bls.find(e => ((e.month == month) && (e.year == year))).value;
@@ -13,28 +15,23 @@ function calculatePrice(datos) {
 }
 
 function validateData(data) {
-    let allOk = false;
+    let monthsOk = false;
     const regex = new RegExp(/^\d{0,10}(\.\d{0,2})?$/);
     if (regex.test(data.price1)) {
-        let yearsOk = ((data.year1 >= 1913) && (data.year2 >= 1913) && (data.year1 <= 2022) && (data.year2 <= 2022));
-        let monthsOk = false;
+        let yearsOk = (((data.year1 && data.year2) >= YEAR_FIRST) && (data.year1 && data.year2 <= YEAR_LAST));
         if (yearsOk) {
-            if ((data.year1 != 2022) && (data.year2 != 2022)) {
-                monthsOk = (data.month1 <= 12) && (data.month2 <= 12);
+            if (data.year1 != YEAR_LAST && data.year2 != YEAR_LAST) {
+                monthsOk = data.month1 <= 12 && data.month2 <= 12;
+            } else if (data.year1 == YEAR_LAST && data.year2 == YEAR_LAST) {
+                monthsOk = data.month1 <= 3 && data.month2 <= 3;
+            } else if (data.year1 == YEAR_LAST) {
+                monthsOk = data.month1 <= 3 && data.month2 <= 12;
+            } else {
+                monthsOk = data.month1 <= 12 && data.month2 <= 3;
             }
-            else if ((data.year1 == 2022) && (data.year2 == 2022)) {
-                monthsOk = (data.month1 <= 3) && (data.month2 <= 3);
-            }
-            else if (data.year1 == 2022) {
-                monthsOk = (data.month1 <= 3) && (data.month2 <= 12);
-            }
-            else {
-                monthsOk = (data.month1 <= 12) && (data.month2 <= 3);
-            }
-        }
-        allOk = yearsOk && monthsOk;
+        } 
     }
-    return allOk;
+    return yearsOk && monthsOk;
 }
 
 module.exports = {
