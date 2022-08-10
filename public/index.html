@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Calculator</title>
+</head>
+
+<body>
+    <form>
+        <p>Si en</p>
+        <select class="month" name="month1" id="month1"></select>
+        <p>de</p>
+        <select class="year" name="year1" id="year1"></select>
+        <p>compró un producto por</p>
+        <input type="text" pattern="^\d{0,10}(\.\d{0,2})?$" name="price1" id="price1">
+        <p>dólares, entonces en </p>
+        <select class="month" name="month2" id="month2"></select>
+        <p>de</p>
+        <select class="year" name="year2" id="year2"></select>
+        <p>ese producto costaría</p>
+        <input type="text" id="price2" readonly>
+        <p>dólares.</p>
+        <button id="enviar" type="button">Calcular</button>
+    </form>
+    <script src="main.js"></script>
+</body>
+
+</html>
