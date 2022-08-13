@@ -1,8 +1,9 @@
 const express = require('express');
-const ipc = require('./ipcModule');
 const app = express();
+const ipc = require('./ipcModule');
 
 //Settings
+app.set('port', process.env.PORT || 3000);
 app.set('appName', 'Inflation calculator');
 app.set('port', '3000');
 
@@ -10,7 +11,7 @@ app.set('port', '3000');
 app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
-//Rutas
+//Routes
 app.post('/api', (req, res) => {
     const datos = req.body;
 
