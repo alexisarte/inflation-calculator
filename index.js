@@ -5,7 +5,6 @@ const ipc = require('./ipcModule');
 //Settings
 app.set('port', process.env.PORT || 3000);
 app.set('appName', 'Inflation calculator');
-app.set('port', '3000');
 
 // Middlewares
 app.use(express.static('public'));
